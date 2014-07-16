@@ -26,6 +26,7 @@ import weka.classifiers.lazy.IBk;
 import weka.classifiers.meta.AttributeSelectedClassifier;
 import weka.classifiers.trees.J48;
 import weka.core.neighboursearch.KDTree;
+import artclassifier.util.UsefulnessClassifier;
 import artclassifier.util.WikiaArticlesDownloader;
 
 //TODO refactor
@@ -95,7 +96,8 @@ public class ArticleClassifierService {
 
 		ArticleClassifier articleClassifier = null;
 		if (splitForValidationSet) {
-			articleClassifier = new ArticleClassifier(trainingSet, validationSet, classifier, performCrossValidation);
+			articleClassifier = new ArticleClassifier(trainingSet, validationSet, new UsefulnessClassifier(getSVM(), getAttributeSelectionClassifier(getSVM(),
+					new InfoGainAttributeEval(), 500), "other"), performCrossValidation);
 		} else {
 			articleClassifier = new ArticleClassifier(labeledArticles, null, classifier, performCrossValidation);
 		}
@@ -106,7 +108,7 @@ public class ArticleClassifierService {
 		List<Article> articles = new ObjectMapper().readValue(
 				new JsonFactory().createJsonParser(
 						ArticleClassifierService.class.getResourceAsStream(LABELED_ARTICLES_JSON_FILE)),
-				new TypeReference<List<Article>>() {
+						new TypeReference<List<Article>>() {
 				});
 		return articles;
 	}
