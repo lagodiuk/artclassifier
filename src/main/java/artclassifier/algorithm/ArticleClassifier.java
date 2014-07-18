@@ -79,6 +79,25 @@ public class ArticleClassifier {
 		return result;
 	}
 
+	public String classifySingleBestChoice(Article article) throws Exception {
+		Instances classificationSet = this.createEmptyInstancesSet("classificationSet");
+		Instance instance = this.articleToInstance(article);
+		instance.setDataset(classificationSet);
+
+		double[] distribution = this.classifier.distributionForInstance(instance);
+		Integer resultNo = 0;
+		Double highestResult = 0.0;
+
+		for (int i = 0; i < distribution.length; i++) {
+			if (distribution[i] > highestResult){
+				highestResult = distribution[i];
+				resultNo = i;
+			}
+		}
+
+		return this.labelAttribute.value(resultNo);
+	}
+
 	private void buildClassifier(Instances trainingSet, Classifier classifier) throws Exception {
 
 		if (FILTERS != null) {

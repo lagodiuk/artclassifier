@@ -67,6 +67,19 @@
 			<scope>test</scope>
 		</dependency>
 
+	<!-- Rabbit Worker Deps -->
+		<dependency>
+			<groupId>com.rabbitmq</groupId>
+			<artifactId>amqp-client</artifactId>
+			<version>3.3.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20140107</version>
+		</dependency>
+
 		<!-- SPRING DEPENDENCIES -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -78,7 +91,6 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-
 
 		<!-- JETTY DEPENDENCIES -->
 		<dependency>
@@ -165,26 +177,6 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
-							<plugin>
-								<groupId>org.apache.maven.plugins</groupId>
-								<artifactId>maven-assembly-plugin</artifactId>
-								<version>2.4</version>
-								<configuration>
-									<descriptorRefs>
-										<descriptorRef>jar-with-dependencies</descriptorRef>
-									</descriptorRefs>
-
-								</configuration>
-								<executions>
-									<execution>
-										<id>assemble-all</id>
-										<phase>package</phase>
-										<goals>
-											<goal>single</goal>
-										</goals>
-									</execution>
-								</executions>
-							</plugin>
 							<createDependencyReducedPom>false</createDependencyReducedPom>
 							<filters>
 								<filter>
